@@ -80,7 +80,7 @@
 		</form>
 
 		<div class="alert alert-danger" style="display:none" id="error" role="alert" >
-			Error de autenticación!
+			Error de autenticación
 		</div>
 
 		<script>
@@ -91,11 +91,12 @@
 				const xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
-						var response = this.responseText;
-						if (response == 'Admin'){
-							window.location.href = "pagina_admin.php";
+						var response = xhttp.responseText;
+						console.log(response);
+						if (response=='Admin'){
+							window.location.href = "admin/pagina_admin.php";
 						} else {
-							document.getElementById('error').style.display="";
+							document.getElementById('error').style.display="block";
 							
 
 						}
