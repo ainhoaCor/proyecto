@@ -56,6 +56,10 @@
 							<li class="nav-item">
 								<a class="nav-link active text-light" href="ubicacion.html">Contacto</a>
 							</li>
+
+							<li class="nav-item">
+								<a class="nav-link active text-light" href="inicio_sesion_admin.html">Admin</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -63,23 +67,26 @@
 		</div>
 	</header>
 	<!-- SECTION -->
-	<h2>Iniciar sesion:</h2>
+	
 	<section class="container wrapper">
-		<form>
-			<div class="mb-3 w-70">
-				<label for="exampleInputEmail1" class="form-label">Email</label>
-				<input type="text" class="form-control" id="email" required>
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password</label>
-				<input type="password" class="form-control" id="password" required>
-			</div>
+		<h2>Inicio sesion como Admin:</h2>
+		<div class="d-flex justify-content-center">
+			<form id="formAdmin">
+				<div class="mb-3 w-70">
+					<label for="exampleInputEmail1" class="form-label">Email</label>
+					<input type="text" class="form-control" id="email" required>
+				</div>
+				<div class="mb-3">
+					<label for="password" class="form-label">Password</label>
+					<input type="password" class="form-control" id="password" required>
+				</div>
 
-			<br>
-			<button type="button" id="botonSesion" class="btn btn-dark" onclick="confirmar()">Aceptar</button>
-		</form>
+				<br>
+				<button type="button" id="botonAdmin" class="btn btn-dark" onclick="confirmar()">Aceptar</button>
+			</form>
+		</div>
 
-		<div class="alert alert-danger" style="display:none" id="error" role="alert" >
+		<div class="alert alert-danger" style="display:none" id="error" role="alert">
 			Error de autenticación
 		</div>
 
@@ -87,17 +94,17 @@
 			function confirmar() {
 				var email = document.getElementById("email").value;
 				var password = document.getElementById("password").value;
-				
+
 				const xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
 						var response = xhttp.responseText;
 						console.log(response);
-						if (response=='Admin'){
+						if (response == 'Admin') {
 							window.location.href = "admin/pagina_admin.php";
 						} else {
-							document.getElementById('error').style.display="block";
-							
+							document.getElementById('error').style.display = "block";
+
 
 						}
 					}
@@ -116,25 +123,26 @@
 	</section>
 
 	<!-- FOOTER -->
-	<div class="bg-dark">
-		<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 bg-dark">
+	<div class="container-fluid">
+		<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-3 border-top">
 			<div class="col-md-4 d-flex align-items-center">
-				<a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-					<svg class="bi" width="30" height="20">
+				<a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+					<svg class="bi" width="30" height="24">
 						<use xlink:href="#bootstrap" />
 					</svg>
 				</a>
-				<span class="mb-3 mb-md-0 text-white">&copy; 2023 AM, Inc</span>
+				<span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 AM Inc | Ainhoa Corral Rojo</span>
+
 			</div>
 
-			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-				<li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+			<ul class="footer nav col-md-4 justify-content-end list-unstyled d-flex">
+				<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
 							<use xlink:href="#twitter" />
 						</svg></a></li>
-				<li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+				<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
 							<use xlink:href="#instagram" />
 						</svg></a></li>
-				<li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+				<li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
 							<use xlink:href="#facebook" />
 						</svg></a></li>
 			</ul>
