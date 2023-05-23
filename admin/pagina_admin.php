@@ -18,7 +18,7 @@
   <div class="sidebar">
     <header>ADMIN</header>
     <ul>
-      <li><a href="#"><i class="fas fa-qrcode"></i>Stock</a></li>
+      <li><a href="stock.php"><i class="fas fa-qrcode"></i>Stock</a></li>
       <li><a href="#"><i class="fas fa-link"></i>Clientes</a></li>
       <li><a href="#"><i class="fas fa-calendar-week"></i>Eventos</a></li>
       <li><a href="#"><i class="fas fa-stream"></i>Pedidos proveedor</a></li>   
