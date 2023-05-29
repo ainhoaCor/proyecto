@@ -7,24 +7,22 @@ DROP TABLE IF EXISTS `stock`;
 CREATE TABLE `stock` (
   `CodProd` int(11) NOT NULL,
   `NameProd` varchar(50) DEFAULT NULL,
-  `Supplier` varchar(30) DEFAULT NULL,
   `Description` varchar(30) DEFAULT NULL,
-  `SalePrice` decimal(10) NOT NULL,
-  `SupplierPrice` decimal(10) NOT NULL,
+  `Price` decimal(10) NOT NULL, 
   `Ud` int(11) NOT NULL,
-  PRIMARY KEY (`CodProd`, `Ud`)
+  `image` varchar(70) DEFAULT NULL,
+  PRIMARY KEY (`CodProd`)
  
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `stock` WRITE;
 
-INSERT INTO `stock` VALUES (1, 'Ron Bacardi', 'Distribuidora ABC', 'Ron añejo 8 años', 10.00, 8.00, 10),(2, 'Vodka Absolut', 'Distribuidora XYZ', 'Vodka Premium', 10.00, 7.00, 10),
-(3, 'Tequila José Cuervo', 'Distribuidora DEF', 'Tequila reposado', 10.00, 7.00, 10),(4, 'Cerveza Corona', 'Distribuidora ABC', 'Cerveza mexicana', 5.00, 3.00, 24),
- (5, 'Coca Cola', 'Distribuidora Coca Cola', 'Refresco cola', 2.50, 1.00, 30),(6, 'Whisky Johnnie Walker', 'Distribuidora ABC', 'Whisky escocés', 10.00, 15.00, 10),
- (7, 'Gin Tanqueray', 'Distribuidora XYZ', 'Gin Premium', 10.00, 6.00, 17),(8, 'Ron Malibu', 'Distribuidora DEF', 'Ron con sabor a coco', 10.00, 8.00, 15),
- (9, 'Cerveza Heineken', 'Distribuidora Heineken', 'Cerveza holandesa', 5.00, 3.00, 34),(10, 'Sprite', 'Distribuidora Coca Cola', 'Refresco lima-limón', 2.50, 1.00, 26),
- (11, 'Fanta Limon', 'Distribuidora Coca Cola', 'Refresco limón', 2.50, 1.00, 15),(12, 'Red Bull', 'Distribuidora Red Bull', 'Bebida energetica', 3.50, 1.50, 20);
+INSERT INTO `stock` VALUES (1, 'Camiseta Negra AM','Camiseta negra con logo talla unica', 15.00, 10, ),
+(2, 'Camiseta Blanca AM','Camiseta blanca con logo talla unica', 15.00, 12),
+(3, 'Sudadera Morada AM', 'Sudadera morada con logo talla unica', 25.90, 16),
+(4, 'Tote Bag Negra', 'Bolsa de tela con logo', 7.00, 24),
+ (5, 'Gorro Lana Negro', 'Gorro de lana negro con logotipo', 8.00, 30);
 
  UNLOCK TABLES;
 
@@ -77,29 +75,10 @@ INSERT INTO `events` VALUES (1, 'Fiesta de inauguracion', '2023-06-10', '10:00 P
 
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `SupplierOrders`;
-CREATE TABLE `supplierOrders`(
-  `CodSupOrder` int(10) NOT NULL,
-  `NameProduct` varchar(50) DEFAULT NULL,
-  `NameSupplier` varchar(30) DEFAULT NULL,
-  `DateOrder` date DEFAULT NULL,
-  `DeliverDate` date DEFAULT NULL,
-  `Ud` int(10) DEFAULT NULL,
-  `Price` decimal(10) DEFAULT NULL,
-  PRIMARY KEY (`CodSupOrder`)
 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `supplierOrders` VALUES (1, 'Botellas de licor', 'Distribuidora XYZ', '2023-05-10', '2023-05-15', 100, 150.50),
- (2, 'Cajas de cerveza', 'Distribuidora ABC', '2023-06-01', '2023-06-05', 50, 75.25),
- (3, 'Barriles de cerveza', 'Distribuidora XYZ', '2023-07-10', '2023-07-15', 10, 300.00),
- (4, 'Botellas de agua', 'Distribuidora AguaFresca', '2023-08-01', '2023-08-05', 200, 1.50),
- (5, 'Bolsas de hielo', 'Distribuidora FrioMax', '2023-09-10', '2023-09-15', 50, 10.99);
-
-UNLOCK TABLES;
-
-DROP TABLE IF EXISTS `merchanOrders`;
-CREATE TABLE `merchanOrders`(
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders`(
   `CodOrder` int(10) NOT NULL,
   `CodClient` int(10) NOT NULL,
   `Date` Date DEFAULT NULL,
@@ -112,37 +91,38 @@ CREATE TABLE `merchanOrders`(
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `merchanOrders` VALUES
-(1, 1, '2023-05-10', 2),
-(2, 4, '2023-06-05', 5),
-(3, 3, '2023-07-15', 1),
-(4, 5, '2023-08-20', 3),
-(5, 2, '2023-09-10', 4);
+INSERT INTO `orders` VALUES
+(1, 1, '2023-05-10', 30.00),
+(2, 4, '2023-06-05', 22.90),
+(3, 3, '2023-07-15', 15.00);
 
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS `merchanOrdersDetails`;
+DROP TABLE IF EXISTS `ordersDetails`;
 
 
-CREATE TABLE `merchanOrdersDetails`(
+CREATE TABLE `ordersDetails`(
   `CodOrder` int(10) NOT NULL,
-  `CodProduct` int(10) NOT NULL,
+  `CodProd` int(11) NOT NULL,
   `Ud` int(10) DEFAULT NULL,
+  `UdPrice` decimal(15,2) NOT NULL,
   `AdressClient` varchar(50) DEFAULT NULL,
  
-  PRIMARY KEY (`CodOrder`, `CodProduct`)
+  PRIMARY KEY (`CodOrder`, `CodProd`),
+  CONSTRAINT `CodOrder_FK` FOREIGN KEY (`CodOrder`) REFERENCES `Orders` (`CodOrder`),
+  CONSTRAINT `CodProd_FK` FOREIGN KEY (`CodProd`) REFERENCES `Stock` (`CodProd`)
 
  
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `merchanOrdersDetails` VALUES
-(1, 1, 2, 'Calle Mayor 1, 28001 Madrid'),
-(1, 2, 3, 'Plaza del Sol 2, 08001 Barcelona'), 
-(2, 3, 1, 'Calle Gran Vía 3, 46001 Valencia'), 
-(2, 4, 5, 'Avenida Diagonal 4, 08009 Barcelona'),
-(3, 2, 2, 'Calle Alcalá 5,28005 Madrid'); 
+INSERT INTO `ordersDetails` VALUES
+(1, 1, 2, 15.00, 'Calle Mayor 1, 28001 Madrid'),
+(1, 2, 3, 15.00, 'Calle Mayor 1, 28001 Madrid'), 
+(2, 3, 1, 25.90,'Avenida Diagonal 4, 08009 Barcelona'), 
+(2, 4, 5, 7.00,'Avenida Diagonal 4, 08009 Barcelona'),
+(3, 2, 2, 15.00, 'Calle Gran Vía 3, 46001 Valencia'); 
 
 
 UNLOCK TABLES;
