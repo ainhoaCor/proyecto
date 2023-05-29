@@ -17,15 +17,15 @@
     <i class="fas fa-times" id="cancel"></i>
   </label>
   <div class="sidebar">
-    <header>ADMIN</header>
+    <header id="hola">Hola Admin</header>
     <ul>
       <li><a href="#" onclick="funcOptions()"><i class="fas fa-qrcode"></i>Stock</a></li>
       <li><a href="#"><i class="fas fa-link"></i>Clientes</a></li>
       <li><a href="#"><i class="fas fa-calendar-week"></i>Eventos</a></li>
       <li><a href="#"><i class="fas fa-stream"></i>Pedidos proveedor</a></li>
       <li><a href="#"><i class="fas fa-sliders-h"></i>Pedidos clientes</a></li>
-      <li><a href="#"><i class="fas fa-sliders-h"></i>Services</a></li>
-      <li><a href="#"><i class="far fa-envelope"></i>Contact</a></li>
+      <!-- <li><a href="#"><i class="fas fa-sliders-h"></i>Services</a></li>
+      <li><a href="#"><i class="far fa-envelope"></i>Contact</a></li> -->
     </ul>
   </div>
 
@@ -108,6 +108,7 @@
           }
         
     </script>
+
 
   </section>
 </body>
