@@ -50,15 +50,12 @@
 								<a class="nav-link active text-light" href="reserva.html">Reserva</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link active text-light" href="merchandising.html">Merchandising</a>
+								<a class="nav-link active text-light"
+									href="carrito_compra/merchandising.php">Merchandising</a>
 							</li>
 
 							<li class="nav-item">
 								<a class="nav-link active text-light" href="ubicacion.html">Contacto</a>
-							</li>
-
-							<li class="nav-item">
-								<a class="nav-link active text-light" href="inicio_sesion.html">Iniciar sesion</a>
 							</li>
 
 							<li class="nav-item">
@@ -68,37 +65,34 @@
 					</div>
 				</div>
 			</nav>
-
-
 		</div>
 	</header>
 
-	
+
 	<section class="container wrapper">
 		<h2>Reservados de zona VIP:</h2>
-		<div class="d-flex justify-content-center">			
-			<form>
+		<div class="d-flex justify-content-center">
+			<form id="formu">
 				<div class="mb-3 w-70">
-					<label for="exampleInputEmail1" class="form-label">Nombre</label>
-					<input type="text" class="form-control" required>
-					<div id="emailHelp" class="form-text"></div>
+					<label for="exampleInputEmail1" class="form-label">Nombre y apellidos</label>
+					<input type="text" id="nom" name="nom" class="form-control" required>
 				</div>
 				<div class="mb-3">
-					<label for="apellidos" class="form-label">Apellidos</label>
-					<input type="txt" class="form-control" id="exampleInputPassword1">
+					<label for="contacto" class="form-label">Numero de contacto</label>
+					<input type="number" id="tlf" name="tlf" max="9" class="form-control" required>
 				</div>
 				<div class="mb-3">
-					<label for="contacto" class="form-label">Numero de contacto
-					</label>
-					<input type="number" class="form-control" id="exampleInputPassword1">
+					<label for="personas" class="form-label">Numero de personas *maximo 20 personas*</label>
+					<input type="number" id="per" name="per" class="form-control" min="1" max="20" required>
 				</div>
 				<div class="mb-3">
-					<label for="personas" class="form-label">Numero de personas</label>
-					<input type="number" class="form-control" min="1" max="20" id="exampleInputPassword1" required>
+					<label for="personas" class="form-label">Fecha</label>
+					<input type="date" id="fecha" name="fecha" class="form-control" required>
 				</div>
 				<div class="mb-3">
 					<label for="disabledSelect" class="form-label">Hora</label>
-					<select id="disabledSelect" class="form-select">
+					<select id="hora" name="hora" class="form-select" required>
+						<option>Selecciona una hora</option>
 						<option>23:00</option>
 						<option>00:00</option>
 						<option>01:00</option>
@@ -106,9 +100,69 @@
 						<option>03:00</option>
 					</select>
 
-					<br><button type="submit" id="botonForm" class="btn btn-dark">Aceptar</button>
+					<br><button type="button" id="botonForm" class="btn btn-dark" onclick="confirmar()">Aceptar</button>
 			</form>
+			<br><br>
+			<div class="alert alert-success" style="display:none" id="div" role="alert">			
+				<p id="p"></p>
+			</div>
+			<div class="alert alert-danger" style="display:none" id="div2" role="alert">			
+				<p id = "p2">Rellene bien los campos</p>
+			</div>
 		</div>
+
+
+		<script>
+			function confirmar() {
+				var nom = document.getElementById("nom").value;
+				var tlf = document.getElementById("tlf").value;
+				var per = document.getElementById("per").value;
+				var hora = document.getElementById("hora").value;
+				var fecha = document.getElementById("fecha").value;
+
+				//asegurar que no se pueda elegir una fecha menor al dia actual
+				var fechaActual = new Date();
+
+				//formatear la fecha actual al formato AAAA-MM-DD
+				var year = fechaActual.getFullYear();
+				
+				//los meses en js estan indexados desde 0, por lo que se le suma 1 al resultado para obtener el numero de mes real
+				var mes = ('0' + (fechaActual.getMonth() + 1)).slice(-2);//slice(2) para que el mes tenga dos digitos
+				var dia = ('0' + fechaActual.getDate()).slice(-2);
+				var fechaActualFormateada = year + '-' + mes + '-' + dia;
+
+				if (nom != "" && per != "" && per <= 20 && tlf.length == 9  && fecha >= fechaActualFormateada && hora !="Seleccione una fecha")  {
+					const xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function () {
+						if (this.readyState == 4 && this.status == 200) {
+							var response = xhttp.responseText;				
+							if(response=="Reserva realizada!"){
+								var p = document.getElementById("p");
+								p.innerHTML = response;		
+								document.getElementById("div").appendChild(p);
+								document.getElementById("div").style.display="block";
+							}else{
+								var p = document.getElementById("p2");
+								p.innerHTML = response;		
+								document.getElementById("div2").appendChild(p);
+								document.getElementById("div2").style.display="block";
+							}
+
+						}
+					};
+
+					xhttp.open("GET", "crear_reserva.php?nombre=" + nom + "&telefono=" + tlf + "&persona=" + per + "&fecha=" + fecha + "&hora=" + hora, true);
+					xhttp.send();
+
+				} else {
+					document.getElementById("div2").style.display="block";
+
+				}
+
+			}
+
+		</script>
+
 
 	</section>
 

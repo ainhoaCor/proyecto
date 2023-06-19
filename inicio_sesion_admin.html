@@ -50,7 +50,8 @@
 								<a class="nav-link active text-light" href="reserva.html">Reserva</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link active text-light" href="merchandising.html">Merchandising</a>
+								<a class="nav-link active text-light"
+									href="carrito_compra/merchandising.php">Merchandising</a>
 							</li>
 
 							<li class="nav-item">
@@ -67,7 +68,7 @@
 		</div>
 	</header>
 	<!-- SECTION -->
-	
+
 	<section class="container wrapper">
 		<h2>Inicio sesion como Admin:</h2>
 		<div class="d-flex justify-content-center">
@@ -83,11 +84,12 @@
 
 				<br>
 				<button type="button" id="botonAdmin" class="btn btn-dark" onclick="confirmar()">Aceptar</button>
+				<br>
+				<br>
+				<div class="alert alert-danger" style="display:none" id="error" role="alert">
+					Error de autenticación
+				</div>
 			</form>
-		</div>
-
-		<div class="alert alert-danger" style="display:none" id="error" role="alert">
-			Error de autenticación
 		</div>
 
 		<script>
@@ -99,7 +101,7 @@
 				xhttp.onreadystatechange = function () {
 					if (this.readyState == 4 && this.status == 200) {
 						var response = xhttp.responseText;
-						console.log(response);
+						// console.log(response);
 						if (response == 'Admin') {
 							window.location.href = "admin/pagina_admin.php";
 						} else {
