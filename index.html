@@ -50,7 +50,8 @@
 								<a class="nav-link active text-light" href="reserva.html">Reserva</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link active text-light" href="merchandising.html">Merchandising</a>
+								<a class="nav-link active text-light"
+									href="carrito_compra/merchandising.php">Merchandising</a>
 							</li>
 
 							<li class="nav-item">
@@ -67,7 +68,6 @@
 		</div>
 
 
-		<!-- para acceder como cliente o admin -->
 
 	</header>
 
@@ -80,47 +80,73 @@
 			discoteca tengan una experiencia segura y agradable.
 			¡Ven y únete, te esperamos!</p>
 	</div>
+	<br>
+	
 	<!-- CARRUSEL CON IMAGENES -->
 	<section class="container wrapper">
-		<div id="carouselExample" class="carousel slide w-50">
-			<div class="carousel-indicators">
-				<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"
-					aria-current="true" aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"
-					aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"
-					aria-label="Slide 3"></button>
-				<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3"
-					aria-label="Slide 4"></button>
-				<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3"
-					aria-label="Slide 5"></button>
-			</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div id="carouselExample" class="carousel slide w-100">
+					<div class="carousel-indicators">
+						<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"
+							aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"
+							aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"
+							aria-label="Slide 3"></button>
+						<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3"
+							aria-label="Slide 4"></button>
+						<button type="button" data-bs-target="#carouselExample" data-bs-slide-to="3"
+							aria-label="Slide 5"></button>
+					</div>
 
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img class="d-block" src="2.png" alt="Primera Imagen">
-				</div>
-				<div class="carousel-item">
-					<img class="d-block" src="1.2.jpg" alt="Segunda Imagen">
-				</div>
-				<div class="carousel-item">
-					<img class="d-block" src="3.2.jpg" alt="Tercera Imagen">
-				</div>
-				<div class="carousel-item">
-					<img class="d-block" src="4.2.jpg" alt="Cuarta Imagen">
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img class="d-block" src="4.2.jpg" alt="Primera Imagen">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block" src="1.2.jpg" alt="Segunda Imagen">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block" src="3.2.jpg" alt="Tercera Imagen">
+						</div>
+						<div class="carousel-item">
+							<img class="d-block" src="2.png" alt="Cuarta Imagen">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+						data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden"></span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+						data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden"></span>
+					</button>
 				</div>
 			</div>
+			
+			<div class="col-md-6">
+				<div id="tabla">
+					
+				</div>
+				<script>
+					const xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function () {
+						if (this.readyState == 4 && this.status == 200) {
+							var res = xhttp.responseText;
+							document.getElementById("tabla").innerHTML = res;
 
-			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden"></span>
-			</button>
-			<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden"></span>
-			</button>
+						}
+					};
+
+					xhttp.open("GET", "mostrar_eventos.php", true);
+					xhttp.send();
+
+				</script>
+			</div>
 		</div>
-
 	</section>
 
 	<!-- FOOTER -->
@@ -132,8 +158,8 @@
 						<use xlink:href="#bootstrap" />
 					</svg>
 				</a>
-				<span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 AM Inc  |  Ainhoa Corral Rojo</span>
-				
+				<span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 AM Inc | Ainhoa Corral Rojo</span>
+
 			</div>
 
 			<ul class="footer nav col-md-4 justify-content-end list-unstyled d-flex">
@@ -150,7 +176,7 @@
 		</footer>
 	</div>
 
-	
+
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

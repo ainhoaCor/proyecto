@@ -92,23 +92,37 @@ section {
   transition: all 0.5s;
 }
 
-#div1 {
-  width: 300px; /* Ancho del div */
-  height: 100px; /* Altura del div */
-  background-color: #26292b; /* Color de fondo del div */
-  position: fixed; /* Posición fija en la ventana del navegador */
-  top: 30%; /* Ubicación vertical al 50% de la ventana */
-  left: 50%; /* Ubicación horizontal al 50% de la ventana */
-  justify-content: center; /* Centrar horizontalmente los elementos */
-  border-radius: 10px;
-  
+.responsive-table {
+  border-collapse: collapse;
+  border: 1px solid black;
 }
 
-#select {
-  margin-top: 40px;
-  margin-left: 60px;
+.responsive-table th,
+.responsive-table td {
+  border: 1px solid black;
+  padding: 8px;
 }
 
+.responsive-table th {
+  background-color: #26292b;
+  color: white;
+}
 
+@media screen and (max-width: 600px) {
+  .responsive-table {
+    overflow-x: auto;
+  }
 
+  .responsive-table td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    /* display: inline-block; */
+    width: 50%;
+    margin-left: 5px;
+  }
 
+  .responsive-table th,
+  .responsive-table td {
+    white-space: nowrap;
+  }
+}
