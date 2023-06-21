@@ -70,11 +70,20 @@
 
 
 	<section class="container wrapper">
+
+
+		<div class="d-flex justify-content-center">
+			<form id="formu">
+				<div class="mb-3 w-70">
+					<h3><label for="name" class="form-label">Reserva de zona VIP</label></h3><br>
+					<label for="name" class="form-label">Nombre y apellidos</label>
+
 		<h2>Reservados de zona VIP:</h2>
 		<div class="d-flex justify-content-center">
 			<form id="formu">
 				<div class="mb-3 w-70">
 					<label for="exampleInputEmail1" class="form-label">Nombre y apellidos</label>
+
 					<input type="text" id="nom" name="nom" class="form-control" required>
 				</div>
 				<div class="mb-3">
@@ -103,12 +112,11 @@
 					<br><button type="button" id="botonForm" class="btn btn-dark" onclick="confirmar()">Aceptar</button>
 			</form>
 			<br><br>
-			<div class="alert alert-success" style="display:none" id="div" role="alert">			
+
+			<div class="" id="div" role="alert">		
 				<p id="p"></p>
 			</div>
-			<div class="alert alert-danger" style="display:none" id="div2" role="alert">			
-				<p id = "p2">Rellene bien los campos</p>
-			</div>
+
 		</div>
 
 
@@ -131,21 +139,29 @@
 				var dia = ('0' + fechaActual.getDate()).slice(-2);
 				var fechaActualFormateada = year + '-' + mes + '-' + dia;
 
+				var error="";
+				var p = document.getElementById("p");
+
 				if (nom != "" && per != "" && per <= 20 && tlf.length == 9  && fecha >= fechaActualFormateada && hora !="Seleccione una fecha")  {
+				
+=======
+
 					const xhttp = new XMLHttpRequest();
 					xhttp.onreadystatechange = function () {
 						if (this.readyState == 4 && this.status == 200) {
 							var response = xhttp.responseText;				
 							if(response=="Reserva realizada!"){
-								var p = document.getElementById("p");
-								p.innerHTML = response;		
+
+								p.innerHTML = response;
+								p.setAttribute("class", "alert alert-success");
 								document.getElementById("div").appendChild(p);
-								document.getElementById("div").style.display="block";
+								
 							}else{
-								var p = document.getElementById("p2");
-								p.innerHTML = response;		
-								document.getElementById("div2").appendChild(p);
-								document.getElementById("div2").style.display="block";
+							
+								p.innerHTML = response;
+								p.setAttribute("class", "alert alert-danger");		
+								document.getElementById("div").appendChild(p);
+	
 							}
 
 						}
@@ -155,7 +171,29 @@
 					xhttp.send();
 
 				} else {
-					document.getElementById("div2").style.display="block";
+
+					if(nom == ""){
+						error += "El nombre no puede estar vacio - ";
+					}
+					if(per =="" || per== 0|| per > 20){
+						error += "El nº de personas no puede estar vacio o ser superior a 20 - ";
+					}
+					if(tlf.length < 9){
+						error += "El telefono esta vacio o no es un formato correcto - ";
+
+					}if(fecha < fechaActualFormateada){
+						error += "La fecha no puede ser anterior a la actual - ";
+
+					}if(hora == "Selecciona una hora"){
+						error += "Selecciona una hora";
+					}
+					
+					p.innerHTML = error;
+					p.setAttribute("class", "alert alert-danger");
+					document.getElementById("div").appendChild(p);
+					
+
+
 
 				}
 

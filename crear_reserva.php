@@ -23,4 +23,5 @@ try{
 } catch (PDOException $e) { ?>
     <p> Ya existe una reserva hecha con estos datos</p> <?php
 
+
 }

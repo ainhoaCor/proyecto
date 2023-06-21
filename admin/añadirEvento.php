@@ -1,3 +1,11 @@
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style_admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+</head>
+
 <?php
 
 if (isset($_REQUEST["añadir"])) {
@@ -25,24 +33,34 @@ if (isset($_REQUEST["añadir"])) {
         <form action="pagina_admin.php">
             <button type="submit" name="añadir" style="width:70px; height:30px; font-size:15px;">Volver</button>
         </form> <?php
-            }
-        } else { ?>
-    <h2>Añadir evento:</h2>
-    <br>
-    <form method="get" action="añadirEvento.php">
-        <table class="responsive-table">
-            <?php
-            ?>
-            <tr>
-                <td id="tab"><b>Nombre</b><input type="text" name="name" value=""></td>
-                <td id="tab"><b>Fecha</b><input type="date" name="date" value=""></td>
-                <td id="tab"><b>Hora</b><input type="text" name="time" value=""></td>
-                <td id="tab"><b>Colaborador</b><input type="text" name="colab" value=""></td>
 
-            </tr>
-        </table>
+        }
+        
+} else { ?>
+    <div class="container-fluid p-2">
+        <h2>Añadir evento:</h2>
         <br>
-        <button type="submit" name="añadir" style="width:70px; height:30px; font-size:15px;">Añadir</button>
-    </form><?php
+        <form method="get" action="añadirEvento.php">
+            <table class="responsive-table">
+                <?php
+                ?>
+                <tr>
+                    <th scope="row" style="vertical-align: middle;"><b>Nombre:</b></th>
+                    <th scope="row" style="vertical-align: middle;"><b>Fecha</b> </th>
+                    <th scope="row" style="vertical-align: middle;"><b>Hora</b></th>
+                    <th scope="row" style="vertical-align: middle;"><b>Colaborador</b></th>
+                    <th scope="row" style="vertical-align: middle;"></th>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle;'><input type="text" name="name" value=""></td>
+                    <td style='vertical-align: middle;'><input type="date" name="date" value=""></td>
+                    <td style='vertical-align: middle;'><input type="text" name="time" value=""></td>
+                    <td style='vertical-align: middle;'><input type="text" name="colab" value=""></td>
+                    <td><button type="submit" name="añadir" style="width:70px; height:30px; font-size:15px;">Añadir</button></td>
+                </tr>
+            </table>
+
+        </form>
+    </div><?php
 
         }

@@ -6,7 +6,10 @@ header {
 }
 h2 {
   margin-left: 420px;
-}
+
+} 
+
+
 
 .carousel-item {
   height: 400px;
@@ -259,8 +262,44 @@ img#zoom {
 .responsive-table td {
   border: 1px solid black;
   padding: 8px;
+
+  
 }
 
 .responsive-table th {
-  background-color: #c93af5;
+  background-color: #ffffff;
 }
+
+/* stripe */
+
+
+.StripeElement {
+  background-color: white;
+  height: 40px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #000000;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+#pagar{
+  margin-top:20px;
+  margin-bottom: 200px;
+
+}
+
+
