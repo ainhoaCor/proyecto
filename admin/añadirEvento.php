@@ -1,11 +1,9 @@
-
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style_admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 </head>
-
 <?php
 
 if (isset($_REQUEST["añadir"])) {
@@ -33,7 +31,6 @@ if (isset($_REQUEST["añadir"])) {
         <form action="pagina_admin.php">
             <button type="submit" name="añadir" style="width:70px; height:30px; font-size:15px;">Volver</button>
         </form> <?php
-
         }
         
 } else { ?>
@@ -62,5 +59,4 @@ if (isset($_REQUEST["añadir"])) {
 
         </form>
     </div><?php
-
         }

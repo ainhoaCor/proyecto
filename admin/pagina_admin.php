@@ -71,7 +71,6 @@
     </div>
 
 
-
     <!-- div para imprimir el resultado -->
     <div id="divResult"></div>
 
