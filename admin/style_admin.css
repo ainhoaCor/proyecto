@@ -104,19 +104,14 @@ section {
 }
 
 .responsive-table th {
-
   background-color: #26292b;
   color: white;
-
-  background-color: #f2f2f2;
-
 }
 
 @media screen and (max-width: 600px) {
   .responsive-table {
     overflow-x: auto;
   }
-
 
   .responsive-table td:before {
     content: attr(data-label);

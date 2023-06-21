@@ -49,7 +49,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link active text-light" href="./ubicacion.html">Contacto</a>
+                                <a class="nav-link active text-light" href="../ubicacion.html">Contacto</a>
                             </li>
 
                             <li class="nav-item">
@@ -65,10 +65,12 @@
     <!-- SECTION -->
     <section class="container wrapper">
 
-        <h2>Registrarse:</h2>
+        
         <div class="d-flex justify-content-center">			
 			<form id="formu">
 				<div class="mb-3 w-70">
+					<h3><label for="exampleInputEmail1" class="form-label">Registrarse:</label></h3>
+
 					<label for="exampleInputEmail1" class="form-label">Nombre</label>
 					<input type="text" name="nombre" id="nombre" class="form-control" required>
 				</div>
@@ -85,27 +87,25 @@
 					<input type="text" name="telefono" class="form-control" id="telefono" min="1" max="9">
 				</div>
 				<div class="mb-3">
-					<label for="disabledSelect" class="form-label">Direccion (Calle numero, CP Ciudad)</label>
+					<label for="disabledSelect" class="form-label">Direccion (Calle nombre numero, CP Ciudad)</label>
                     <input type="text" name="direccion" class="form-control" id="direccion">
                 </div>
                 <div class="mb-3">
-					<label for="disabledSelect" class="form-label">Password</label>
+					<label for="disabledSelect" class="form-label">Password (mínimo una mayúscula, un carácter especial y un número)</label>
                     <input type="password" name="password" class="form-control" id="password">
                 </div>
 
 					<br><button type="button" id="botonForm" class="btn btn-dark" onclick="confirmar()">Aceptar</button>
                        <a href="LogIn.php">¿Ya estas registrado? Log in</a>
-			</form>
+                <br><br>
+                <div id="div" class="">
+                    <p id="p"></p>
+                </div>
+                </form>
 		</div>
 
 
-        <div class="alert alert-danger" style="display:none" id="error" role="alert">
-            Se ha producido un error, vuelva a intentarlo 
-        </div>
-
-        <div id="div">
-            <p id="p"></p>
-        </div>
+        
 
         <script>
             function confirmar() {
@@ -120,15 +120,19 @@
                 var telfExp=/^\d{9}$/;
                 var emailExp=/^[a-zA-Z0-9_.+-]+@(gmail|hotmail|yahoo)\.(es|com)$/;
                 var dirExp=/^[A-Za-záéíóúü\s]+ \d{1,3}, \d{5} [A-Za-záéíóúü\s]+$/;
+                var passExp=/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[A-Za-z\d!@#$%^&*()]{8,}$/;
+                var error="";
 
+                var p=document.getElementById("p");
+                var div=document.getElementById("div");
                 if(telfExp.test(telf) && emailExp.test(email) && dirExp.test(dir)  && nombre !== '' && ape !== '' && pass !==''){
                     const xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function() {
                         if (this.readyState == 4 && this.status == 200) {
                             var response = xhttp.responseText;
-                            var p=document.getElementById("p");
                                 p.innerHTML = response;
-                            document.getElementById("div").appendChild(p);
+                                div.setAttribute("class", "alert alert-success"); 
+                                div.appendChild(p);
                             
                         }
                     };
@@ -138,11 +142,34 @@
                     xhttp.send();
                     
                 }else{
-                    document.getElementById('error').style.display = "block";
+                    if(nombre == ""){
+                        error += "El nombre no puede estar vacio -";
+                    }
+
+                    }if(ape == ""){
+                        error += "El apellido no puede estar vacio -";
+                    }
+                    if(!telfExp.test(telf)){
+                        error +="Formato de telefono incorrecto -";
+                    }
+                    if(!emailExp.test(email)){
+                        error +="Formato de email incorrecto -";
+
+                    }
+                    if(!dirExp.test(dir)){
+                        error +="Formato de email incorrecto -";
+
+                    }
+                    if(!passExp.test(pass)){
+                        error +="La password tiene que tener una letra mayúscula, al menos un número y al menos un carácter especial -";
+
+                    }
+                   
+                    div.setAttribute("class", "alert alert-danger"); 
+                    p.innerHTML=error;
                 }
                 
 
-            }
         </script>
 
 
