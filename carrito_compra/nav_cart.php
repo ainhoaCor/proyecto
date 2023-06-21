@@ -37,12 +37,15 @@ if (!isset($totalcantidad)) {
 
 <!-- NAVBAR -->
 <?php
+
+// si hay una sesion iniciada se mostrará un navbar diferente
 if (isset($_SESSION['email'])) { ?>
   <nav class="navbar navbar-expand-lg" style="background-color:black; color:white;">
     <div class="container-fluid">
       <a class="navbar-brand" id="miCarrito" href="#"><?php echo $_SESSION['email'] ?></a>
-      <a class="navbar-brand" id="logOut" href="borrarSession.php">Log Out</a>
+      <a class="navbar-brand" id="logOut" href="/proyectofinaldaw_ainhoacorralrojo/carrito_compra/borrarSession.php">Log Out</a>
       <a class="navbar-brand" id="miCarrito" href="#">Mi carrito -> </a>
+      
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -56,6 +59,7 @@ if (isset($_SESSION['email'])) { ?>
       </div>
     </div>
   </nav> <?php
+
 } else { ?>
   <nav class="navbar navbar-expand-lg" style="background-color:black; color:white;">
     <div class="container-fluid">

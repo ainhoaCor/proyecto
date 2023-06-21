@@ -167,8 +167,8 @@
         <hr>
 
         <?php
-        // DATOS DE ENVIO 
 
+        // DATOS DE ENVIO 
         if (isset($_SESSION['email']) && !empty($_SESSION['carrito'] && $_SESSION['carrito'] != NULL)) {
             // Obtener los datos de envio de la base de datos utilizando $_SESSION['email']
             $db = new PDO('mysql:host=localhost; dbname=am', "root");
@@ -176,6 +176,7 @@
             $consulta->bindParam(':email', $_SESSION['email']);
             $consulta->execute();
             $cliente = $consulta->fetch(PDO::FETCH_ASSOC);
+            
 
         ?>
             <!-- datos cliente -->
