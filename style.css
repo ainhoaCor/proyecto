@@ -6,7 +6,10 @@ header {
 }
 h2 {
   margin-left: 420px;
+
 } 
+
+
 
 .carousel-item {
   height: 400px;
@@ -259,6 +262,7 @@ img#zoom {
 .responsive-table td {
   border: 1px solid black;
   padding: 8px;
+
   
 }
 
@@ -297,3 +301,5 @@ img#zoom {
   margin-bottom: 200px;
 
 }
+
+
