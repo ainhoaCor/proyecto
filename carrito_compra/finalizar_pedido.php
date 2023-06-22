@@ -82,101 +82,72 @@ session_start();
     $nuevo_codigo = $max_codigo + 1;
 
     // INSERTAMOS DATOS EN ORDERS
-    $miCarro = $_SESSION['carrito'];
-    if (isset($miCarro)) {
-        $total_precio = 0;
-        $email = $_SESSION['email'];
-        $fecha = date('Y-m-d');
-        for ($i = 0; $i <= count($miCarro) - 1; $i++) {
-            if (isset($miCarro[$i])) {
-                $total_precio += $miCarro[$i]['Price'] * $miCarro[$i]['Ud'];
-            }
-        }
-        $consul = $db->prepare("INSERT INTO orders VALUES(:codigo, :email, :fecha, :total)");
-        $consul->bindParam(':codigo', $nuevo_codigo);
-        $consul->bindParam(':email', $email);
-        $consul->bindParam(':fecha', $fecha);
-        $consul->bindParam(':total', $total_precio);
-        if (!$consul->execute()) { 
-            echo "Error al registrar el pedido";
-            
-            
-        } 
-
-
-        // INSERTAR DATOS EN TABLA ORDER DETAILS
-        for ($i = 0; $i <= count($miCarro) - 1; $i++) {
-            if (isset($miCarro[$i])) {
-                if ($miCarro[$i] != NULL) {
-                    $codProd = $miCarro[$i]['CodProd'];
-                    $precio = $miCarro[$i]['Price'];
-                    $direccion = $_REQUEST['direccion'];
-                    $datosEnvio=$_SESSION['datosEnvio']=$_REQUEST['direccion']; //se usara mas adelante
-                    $cantidad = $miCarro[$i]['Ud'];
-
-                    $consul2 = $db->prepare("INSERT INTO ordersdetails VALUES(:codOrder, :codProd, :ud, :price, :address)");
-                    $consul2->bindParam(':codOrder', $nuevo_codigo);
-                    $consul2->bindParam(':codProd', $codProd);
-                    $consul2->bindParam(':ud', $cantidad);
-                    $consul2->bindParam(':price', $precio);
-                    $consul2->bindParam(':address', $direccion);
-                    $consul2->execute();
+    try {
+        $miCarro = $_SESSION['carrito'];
+        if (isset($miCarro)) {
+            $total_precio = 0;
+            $email = $_SESSION['email'];
+            $fecha = date('Y-m-d');
+            for ($i = 0; $i <= count($miCarro) - 1; $i++) {
+                if (isset($miCarro[$i])) {
+                    $total_precio += $miCarro[$i]['Price'] * $miCarro[$i]['Ud'];
                 }
             }
-        }
+            $consul = $db->prepare("INSERT INTO orders VALUES(:codigo, :email, :fecha, :total)");
+            $consul->bindParam(':codigo', $nuevo_codigo);
+            $consul->bindParam(':email', $email);
+            $consul->bindParam(':fecha', $fecha);
+            $consul->bindParam(':total', $total_precio);
+            if (!$consul->execute()) {
+                echo "Error al registrar el pedido";
+            }
 
-        // RESTAR UNIDADES AL STOCK
-        for ($i = 0; $i <= count($miCarro) - 1; $i++) {
-            if (isset($miCarro[$i])) {
-                if ($miCarro[$i] != NULL) {
-                    $codProd = $miCarro[$i]['CodProd'];
-                    $cantidad = $miCarro[$i]['Ud'];
-                    $consul3 = $db->prepare("UPDATE stock SET Ud = Ud - :cantidad WHERE codProd = :codProd");
-                    $consul3->bindParam(':cantidad', $cantidad);
-                    $consul3->bindParam(':codProd', $codProd);
-                    $consul3->execute();
+
+            // INSERTAR DATOS EN TABLA ORDER DETAILS
+
+            for ($i = 0; $i <= count($miCarro) - 1; $i++) {
+                if (isset($miCarro[$i])) {
+                    if ($miCarro[$i] != NULL) {
+                        $codProd = $miCarro[$i]['CodProd'];
+                        $precio = $miCarro[$i]['Price'];
+                        $direccion = $_REQUEST['direccion'];
+                        $datosEnvio = $_SESSION['datosEnvio'] = $_REQUEST['direccion']; //se usara mas adelante
+                        $cantidad = $miCarro[$i]['Ud'];
+
+                        $consul2 = $db->prepare("INSERT INTO ordersdetails VALUES(:codOrder, :codProd, :ud, :price, :address)");
+                        $consul2->bindParam(':codOrder', $nuevo_codigo);
+                        $consul2->bindParam(':codProd', $codProd);
+                        $consul2->bindParam(':ud', $cantidad);
+                        $consul2->bindParam(':price', $precio);
+                        $consul2->bindParam(':address', $direccion);
+                        $consul2->execute();
+                    }
                 }
             }
+
+
+
+            // RESTAR UNIDADES AL STOCK
+            for ($i = 0; $i <= count($miCarro) - 1; $i++) {
+                if (isset($miCarro[$i])) {
+                    if ($miCarro[$i] != NULL) {
+                        $codProd = $miCarro[$i]['CodProd'];
+                        $cantidad = $miCarro[$i]['Ud'];
+                        $consul3 = $db->prepare("UPDATE stock SET Ud = Ud - :cantidad WHERE codProd = :codProd");
+                        $consul3->bindParam(':cantidad', $cantidad);
+                        $consul3->bindParam(':codProd', $codProd);
+                        $consul3->execute();
+                    }
+                }
+            }
+            header("Location: stripe/index.php");
+        } else {
+            echo "No hay productos en el carrito :(";
         }
-        header("Location: stripe/index.php");
+    } catch (PDOException $e) { ?>
+        <p>Ha habido un error en el pedido</p><?php
+                                            }
 
+                                                ?>
 
-    }else{
-        echo "No hay productos en el carrito :(";
-    }
-
-    ?>
-
-    <!-- FOOTER -->
-    <div class="container-fluid">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-3 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap" />
-                    </svg>
-                </a>
-                <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 AM Inc | Ainhoa Corral Rojo</span>
-
-            </div>
-
-            <ul class="footer nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-                            <use xlink:href="#twitter" />
-                        </svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-                            <use xlink:href="#instagram" />
-                        </svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-                            <use xlink:href="#facebook" />
-                        </svg></a></li>
-            </ul>
-        </footer>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-
-</body>
-
-</html>
+    <?php include('../footer.html') ?>

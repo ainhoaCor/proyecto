@@ -27,7 +27,7 @@
       <li><a href="#" onclick="funcOptions()"><i class="fas fa-stream"></i>Reservas</a></li>
       <li><a href="#" onclick="funcOptions2()"><i class="fas fa-calendar-week"></i>Eventos</a></li>
       <li><a href="#" onclick="consultar('consultarPedidos.php?')"><i class="fas fa-sliders-h"></i>Pedidos</a></li>
-      <li><a href="../index.html"></i>Volver</a></li>
+      <li><a href="../index.php"></i>Volver</a></li>
 
     </ul>
 
@@ -63,7 +63,7 @@
     <!-- div donde se muestra la fechas -->
     <div id="divDates" style="display:none;">
       <select id="dates">
-        <option>Selecciona hora</option>
+        <option>Selecciona fecha</option>
         <option id=date></option>
       </select>
       <button type="button" onclick="eliminarReserva()">Aceptar<button>

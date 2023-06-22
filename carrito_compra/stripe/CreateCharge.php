@@ -29,7 +29,6 @@ require 'vendor/autoload.php'; ?>
       <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
     </symbol>
   </svg>
-  <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body>
@@ -47,20 +46,20 @@ require 'vendor/autoload.php'; ?>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link active text-light" aria-current="page" href="../index.html">Inicio</a>
+                <a class="nav-link active text-light" aria-current="page" href="../../index.php">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active text-light" href="../reserva.html">Reserva</a>
+                <a class="nav-link active text-light" href="../../reserva.php">Reserva</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active text-light" href="../merchandising.php">Merchandising</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active text-light" href="../ubicacion.html">Contacto</a>
+                <a class="nav-link active text-light" href="../../ubicacion.php">Contacto</a>
               </li>
 
               <li class="nav-item">
-                <a class="nav-link active text-light" href="../inicio_sesion_admin.html">Admin</a>
+                <a class="nav-link active text-light" href="../../inicio_sesion_admin.php">Admin</a>
               </li>
 
             </ul>
@@ -68,21 +67,23 @@ require 'vendor/autoload.php'; ?>
         </div>
       </nav>
     </div>
+    <?php
+    include("../nav_cart.php"); ?>
+  </header><?php
+            // include("../modal_cart.php");
 
-    <?php include("../nav_cart.php"); ?>
-  </header>
 
-  <?php include("../modal_cart.php");
-
-
-  try {
-    $datosEnvio = $_SESSION['datosEnvio'];
-
+            // ******************************* SECTION **************************++
+try {
     \Stripe\Stripe::setApiKey("sk_test_51NDZKqIspXLT1H92NxG5ADyi2h7HQ8GSd6vDzCeTDkJKhZjecuzPVORd4wRoQBBjCvHcHoZinlPviBbn4jkkYEMq00Xn8TMswn");
 
+    $datosEnvio = $_SESSION['datosEnvio'];
+
     if (isset($_POST["stripeToken"])) {
+
       $token = $_POST["stripeToken"];
 
+      // saco el precio total de la sesion carrito para mostrarlo
       if (isset($_SESSION['carrito'])) {
         $miCarro = $_SESSION['carrito'];
         $total = 0;
@@ -104,19 +105,19 @@ require 'vendor/autoload.php'; ?>
       ]); ?>
 
       <div class="container-fluid p-2">
-        <br>
-        <table class="responsive-table">
-          <tr>
-            <th scope="row" style="vertical-align: middle;">Cargo</th>
-            <th scope="row" style="vertical-align: middle;"> Empresa</th>
-            <th scope="row" style="vertical-align: middle;"> Tarjeta </th>
-            <th scope="row" style="vertical-align: middle;"> Direccion de envio </th>
-            <th scope="row" style="vertical-align: middle;"> Descripcion </th>
+        <div class="d-flex justify-content-center">
+          <table class="responsive-table">
+            <tr>
+              <th scope="row" style="vertical-align: middle;">Cargo</th>
+              <th scope="row" style="vertical-align: middle;"> Empresa</th>
+              <th scope="row" style="vertical-align: middle;"> Tarjeta </th>
+              <th scope="row" style="vertical-align: middle;"> Direccion de envio </th>
+              <th scope="row" style="vertical-align: middle;"> Descripción </th>
 
-          </tr>
-          <?php
+            </tr>
+            <?php
 
-          echo "         
+                echo "         
         <tr>
             <td style='vertical-align: middle;'>{$total}€</td>
             <td style='vertical-align: middle;'>{$cargo->calculated_statement_descriptor}</td>    
@@ -125,54 +126,26 @@ require 'vendor/autoload.php'; ?>
             <td style='vertical-align: middle;'>{$cargo->description}</td>
             
         </tr>"; ?>
-        </table>
+          </table>
+        </div>
       </div>
 
       <div class="text-center">
-        <img src="../img/pago_realizado.jpg" height="400px" width="450px"><br>
+        <img src="../img/pago_realizado.jpg" height="400px" width="450px">
         <p>¡Pedido realizado con exito!</p><br>
         <a href="../borrarcarro.php">Volver</a>
       </div> <?php
-            } else {
-              // Manejar el caso en el que no se proporciona el token de Stripe
-              echo "No se proporcionó el token de Stripe";
-            }
-          } catch (PDOException $e) { ?>
-    <p> El mismo token se ha usado mas de una vez</p> <?php
-                                                    }  ?>
+      } else {
+        // Manejar el caso en el que no se proporciona el token de Stripe
+        echo "No se proporcionó el token de Stripe";
+      }
+} catch (Stripe\Exception\ApiErrorException $e) { ?>
+        <div class="container text-center" id="errorPago">
+            <p> Ha habido un fallo con el pago, vuelve a intentarlo</p>
+            <a href="../merchandising.php">Volver</a>
+        </div>
+<?php  }  ?>
 
 
 
-  <!-- FOOTER -->
-  <div class="container-fluid">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-3 border-top">
-      <div class="col-md-4 d-flex align-items-center">
-        <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-          <svg class="bi" width="30" height="24">
-            <use xlink:href="#bootstrap" />
-          </svg>
-        </a>
-        <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023 AM Inc | Ainhoa Corral Rojo</span>
-
-      </div>
-
-      <ul class="footer nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#twitter" />
-            </svg></a></li>
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#instagram" />
-            </svg></a></li>
-        <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-              <use xlink:href="#facebook" />
-            </svg></a></li>
-      </ul>
-    </footer>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
-
-</body>
-
-</html>
+  <?php include('../../footer.html') ?>

@@ -101,16 +101,21 @@ section {
 .responsive-table td {
   border: 1px solid black;
   padding: 8px;
+  word-break: break-word;
 }
 
 .responsive-table th {
   background-color: #26292b;
   color: white;
+  text-align: left;
 }
 
 @media screen and (max-width: 600px) {
-  .responsive-table {
-    overflow-x: auto;
+  .responsive-table,
+  .responsive-table th,
+  .responsive-table td { 
+    /* overflow-x: auto; */
+    display: block;
   }
 
   .responsive-table td:before {

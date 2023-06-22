@@ -26,29 +26,31 @@ if (isset($_REQUEST["modificar"])) {
         }
     }
 } else { ?>
-    <h2>Modificar reservas:</h2>
-    <br>
-    <form method="get" action="modificarReserva.php">
-        <table class="responsive-table">
-            <?php
-            $consulta = mysqli_query($conexion, "SELECT * FROM bookings");
-            $cont = 0;
-            while ($campos = mysqli_fetch_row($consulta)) {
-            ?>
-                <tr>
-                    <td id="tab"><b>Nombre</b><input type="text" name="Name[]" value="<?= $campos[0] ?>"></td>
-                    <td id="tab"><b>Telefono</b><input type="text" name="Phone[]" value="<?= $campos[1] ?>" readonly></td>
-                    <td id="tab"><b>Nº de personas</b><input type="number" name="NumPeople[]" value="<?= $campos[2] ?>"></td>
-                    <td id="tab"><b>Fecha</b><input type="text" name="Date[]" value="<?= $campos[3] ?>" readonly></td>
-                    <td id="tab"><b>Hora</b><input type="text" name="Time[]" value="<?= $campos[4] ?>"></td>
-                    <td>Seleccionar:<input type="radio" name="selec" value="<?= $cont ?>" required></td>
-                </tr>
-            <?php $cont++;
-            } ?>
-        </table>
+    <div class="container-fluid p-2">
+        <h2>Modificar reservas:</h2>
         <br>
-        <button type="submit" name="modificar" style="width:70px; height:30px; font-size:15px;">Modificar</button>
-    </form>
+        <form method="get" action="modificarReserva.php">
+            <table class="responsive-table">
+                <?php
+                $consulta = mysqli_query($conexion, "SELECT * FROM bookings");
+                $cont = 0;
+                while ($campos = mysqli_fetch_row($consulta)) {
+                ?>
+                    <tr>
+                        <td id="tab"><b>Nombre</b><input type="text" name="Name[]" value="<?= $campos[0] ?>"></td>
+                        <td id="tab"><b>Telefono</b><input type="text" name="Phone[]" value="<?= $campos[1] ?>" readonly></td>
+                        <td id="tab"><b>Nº de personas</b><input type="number" name="NumPeople[]" value="<?= $campos[2] ?>"></td>
+                        <td id="tab"><b>Fecha</b><input type="text" name="Date[]" value="<?= $campos[3] ?>" readonly></td>
+                        <td id="tab"><b>Hora</b><input type="text" name="Time[]" value="<?= $campos[4] ?>"></td>
+                        <td>Seleccionar:<input type="radio" name="selec" value="<?= $cont ?>" required></td>
+                    </tr>
+                <?php $cont++;
+                } ?>
+            </table>
+            <br>
+            <button type="submit" name="modificar" style="width:70px; height:30px; font-size:15px;">Modificar</button>
+        </form>
+    </div>
 <?php
 }
 mysqli_close($conexion);

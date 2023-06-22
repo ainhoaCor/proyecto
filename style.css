@@ -272,7 +272,6 @@ img#zoom {
 
 /* stripe */
 
-
 .StripeElement {
   background-color: white;
   height: 40px;
@@ -289,7 +288,7 @@ img#zoom {
 }
 
 .StripeElement--invalid {
-  border-color: #000000;
+  border-color: #f83411;
 }
 
 .StripeElement--webkit-autofill {
@@ -298,8 +297,10 @@ img#zoom {
 
 #pagar{
   margin-top:20px;
-  margin-bottom: 200px;
+  margin-bottom: 50px;
 
 }
 
-
+#errorPago{
+ margin-bottom: 250px;
+}

@@ -28,22 +28,4 @@ if($consul->execute()){
 ?>
 
 
-
-
-
-
-
-<!-- // $colum = $consul->fetchColumn();
-    
-// if ($colum > 0) {  
-//     session_start();
-//     $_SESSION['email'] = $email;
-//     echo"OK";
-
-
-// } else {
-//     echo "ERROR";
-    
-// }
-
-?> -->
+<?php include('../footer.html') ?>
